@@ -33,6 +33,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/commonTest/java"
+        }
+        test {
+            java.srcDirs += "src/commonTest/java"
+        }
+    }
 }
 
 dependencies {
@@ -41,9 +49,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Navigation graph
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -74,4 +79,15 @@ dependencies {
 
     //Paging Library
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha06'
+
+    //Testing
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    androidTestImplementation "android.arch.core:core-testing:1.1.0"
 }
