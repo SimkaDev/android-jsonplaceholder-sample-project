@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.simka.jsonplaceholdersampleproject.databinding.MainFragmentBinding
 import com.simka.jsonplaceholdersampleproject.model.Photo
@@ -45,9 +46,8 @@ class MainFragment: Fragment(), PhotosPagingAdapter.ClickPhotoItemListener {
     private fun setupViews() {
         binding.photosRecyclerView.adapter = photosPagingAdapter
 
-        binding.photosRecyclerView.adapter = photosPagingAdapter.withLoadStateHeaderAndFooter(
-            header = PhotosLoadingAdapter { photosPagingAdapter.retry() },
-            footer = PhotosLoadingAdapter { photosPagingAdapter.retry() }
+        binding.photosRecyclerView.adapter = photosPagingAdapter.withLoadStateFooter(
+            PhotosLoadingAdapter { photosPagingAdapter.retry() }
         )
     }
 
@@ -57,7 +57,8 @@ class MainFragment: Fragment(), PhotosPagingAdapter.ClickPhotoItemListener {
     }
 
     override fun selectPhoto(photo: Photo) {
-        TODO("Not yet implemented")
+        val action = MainFragmentDirections.actionMainToPhotoDetail(photo)
+        findNavController().navigate(action)
     }
 
 }

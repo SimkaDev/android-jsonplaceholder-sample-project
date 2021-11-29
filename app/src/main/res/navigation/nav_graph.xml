@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.simka.jsonplaceholdersampleproject.ui.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/actionMainToPhotoDetail"
+            app:destination="@id/photoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.simka.jsonplaceholdersampleproject.ui.PhotoDetailFragment"
+        android:label="PhotoDetailFragment">
+        <argument
+            android:name="selectedPhoto"
+            app:argType="com.simka.jsonplaceholdersampleproject.model.Photo" />
+    </fragment>
 </navigation>
