@@ -2,4 +2,6 @@
     <string name="app_name">JsonPlaceHolder Sample Project</string>
     <string name="retry">Retry</string>
     <string name="album_number">Album n°%1$d</string>
+    <string name="photos">Photos</string>
+    <string name="photo">Photo {id}</string>
 </resources>

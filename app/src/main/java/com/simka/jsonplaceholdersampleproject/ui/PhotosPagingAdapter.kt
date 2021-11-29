@@ -1,11 +1,17 @@
 package com.simka.jsonplaceholdersampleproject.ui
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.simka.jsonplaceholdersampleproject.R
 import com.simka.jsonplaceholdersampleproject.model.Photo
 import com.simka.jsonplaceholdersampleproject.utils.DiffUtilCallBack
@@ -37,7 +43,16 @@ class PhotosPagingAdapter(private val listener: ClickPhotoItemListener) :
         fun showData(photo: Photo) = with(itemView) {
             Glide.with(this)
                 .load(GlideUtils.getGlideUrl(photo.thumbnailUrl))
-                .error(R.drawable.ic_baseline_error_outline_24)
+                .placeholder(R.color.white)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        return false
+                    }
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        itemView.findViewById<ProgressBar>(R.id.item_progress_bar).visibility = View.GONE;
+                        return false
+                    }
+                })
                 .into(itemView.findViewById(R.id.photoImage))
         }
     }

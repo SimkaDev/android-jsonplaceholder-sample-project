@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.simka.jsonplaceholdersampleproject.R
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.simka.jsonplaceholdersampleproject.databinding.MainFragmentBinding
 import com.simka.jsonplaceholdersampleproject.model.Photo
@@ -57,7 +58,7 @@ class MainFragment: Fragment(), PhotosPagingAdapter.ClickPhotoItemListener {
     }
 
     override fun selectPhoto(photo: Photo) {
-        val action = MainFragmentDirections.actionMainToPhotoDetail(photo)
+        val action = MainFragmentDirections.actionMainToPhotoDetail(photo, photo.id)
         findNavController().navigate(action)
     }
 

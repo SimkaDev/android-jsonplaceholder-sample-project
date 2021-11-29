@@ -1,12 +1,18 @@
 package com.simka.jsonplaceholdersampleproject.ui
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.simka.jsonplaceholdersampleproject.R
 import com.simka.jsonplaceholdersampleproject.databinding.PhotoDetailFragmentBinding
 import com.simka.jsonplaceholdersampleproject.model.Photo
@@ -47,7 +53,16 @@ class PhotoDetailFragment: Fragment() {
 
             Glide.with(this)
                 .load(GlideUtils.getGlideUrl(photoDetail.url))
-                .error(R.drawable.ic_baseline_error_outline_24)
+                .placeholder(R.color.white)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        return false
+                    }
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        binding.progressBar.visibility = View.GONE;
+                        return false
+                    }
+                })
                 .into(binding.photoImageView)
         })
     }
