@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JsonPlaceHolder Sample Project</string>
+    <string name="retry">Retry</string>
 </resources>
