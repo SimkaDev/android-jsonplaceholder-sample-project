@@ -6,5 +6,9 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("photos")
-    suspend fun fetchPhotos(): List<Photo>
+    suspend fun fetchPhotos(
+        @Query("_limit") limit: Int = 0,
+        @Query("_start") start: Int = 0
+    ): List<Photo>
+
 }

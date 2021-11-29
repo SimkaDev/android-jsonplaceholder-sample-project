@@ -1,6 +1,6 @@
 package com.simka.jsonplaceholdersampleproject.database.dao
 
-import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -14,5 +14,5 @@ interface PhotoDao {
     suspend fun savePhotos(photos: List<Photo>)
 
     @Query("SELECT * FROM photos")
-    fun getPhotos(): LiveData<Photo>
+    fun getPhotos(): PagingSource<Int, Photo>
 }
