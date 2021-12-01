@@ -1,36 +1,34 @@
 package com.simka.jsonplaceholdersampleproject
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.simka.jsonplaceholdersampleproject.database.JsonPlaceholderDatabase
+import com.simka.jsonplaceholdersampleproject.di.roomTestModule
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
+import org.koin.core.context.GlobalContext.loadKoinModules
+import org.koin.test.KoinTest
+import org.koin.test.inject
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class PhotoKeysDaoTest {
+class PhotoKeysDaoTest : KoinTest {
 
-    private lateinit var database : JsonPlaceholderDatabase
+    private val database: JsonPlaceholderDatabase  by inject()
 
     private val photoKeyFactory = PhotoKeyFactory()
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    /**
+     * Override default Koin configuration to use Room in-memory database
+     */
     @Before
-    fun initDb() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            JsonPlaceholderDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+    fun init() {
+        loadKoinModules(roomTestModule)
     }
 
     @After

@@ -11,8 +11,8 @@ class PhotoFactory {
             id = id.toLong(),
             albumId = 1,
             title = "title $id",
-            url = "",
-            thumbnailUrl = ""
+            url = "url",
+            thumbnailUrl = "thumbnaiLUrl"
         )
     }
 }

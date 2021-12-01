@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.simka.jsonplaceholdersampleproject.R
-import org.koin.android.viewmodel.ext.android.viewModel
 import com.simka.jsonplaceholdersampleproject.databinding.MainFragmentBinding
 import com.simka.jsonplaceholdersampleproject.model.Photo
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment: Fragment(), PhotosPagingAdapter.ClickPhotoItemListener {
 

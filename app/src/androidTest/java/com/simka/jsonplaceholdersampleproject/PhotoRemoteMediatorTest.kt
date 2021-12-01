@@ -4,47 +4,50 @@ import androidx.paging.*
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.simka.jsonplaceholdersampleproject.api.ApiService
 import com.simka.jsonplaceholdersampleproject.database.JsonPlaceholderDatabase
+import com.simka.jsonplaceholdersampleproject.di.apiEmptyTestModule
+import com.simka.jsonplaceholdersampleproject.di.apiTestModule
+import com.simka.jsonplaceholdersampleproject.di.roomTestModule
 import com.simka.jsonplaceholdersampleproject.model.Photo
 import com.simka.jsonplaceholdersampleproject.repository.PhotoRemoteMediator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.test.KoinTest
+import org.koin.test.inject
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
 
 @ExperimentalPagingApi
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-class PhotoRemoteMediatorTest {
+class PhotoRemoteMediatorTest : KoinTest{
 
-    private val photoFactory = PhotoFactory()
-    private val mockPhotos = listOf(
-        photoFactory.createPhoto(),
-        photoFactory.createPhoto(),
-        photoFactory.createPhoto()
-    )
-    private val mockApi = FakePhotoApi()
+    private val apiService : ApiService by inject()
+    private val database: JsonPlaceholderDatabase  by inject()
 
-    private val mockDb = Room.inMemoryDatabaseBuilder(
-        ApplicationProvider.getApplicationContext(),
-        JsonPlaceholderDatabase::class.java).build()
+    @Before
+    fun init() {
+        loadKoinModules(listOf( roomTestModule))
+    }
 
     @After
     fun tearDown() {
-        mockDb.clearAllTables()
-        mockApi.clearPhotos()
+        database.clearAllTables()
     }
 
     @Test
     fun refreshLoadReturnsSuccessResultWhenMoreDataIsPresent() = runBlocking {
-        // Add mock results for the API to return.
-        mockPhotos.forEach { photo -> mockApi.addPhoto(photo) }
+        loadKoinModules(apiTestModule)
+
         val remoteMediator = PhotoRemoteMediator(
-            mockApi,
-            mockDb
+            apiService,
+            database
         )
         val pagingState = PagingState<Int, Photo>(
             listOf(),
@@ -59,11 +62,11 @@ class PhotoRemoteMediatorTest {
 
     @Test
     fun refreshLoadSuccessAndEndOfPaginationWhenNoMoreData() = runBlocking {
-        // To test endOfPaginationReached, don't set up the mockApi to return post
-        // data here.
+        loadKoinModules(apiEmptyTestModule)
+
         val remoteMediator = PhotoRemoteMediator(
-            mockApi,
-            mockDb
+            apiService,
+            database
         )
         val pagingState = PagingState<Int, Photo>(
             listOf(),

@@ -17,7 +17,7 @@ import com.simka.jsonplaceholdersampleproject.R
 import com.simka.jsonplaceholdersampleproject.databinding.PhotoDetailFragmentBinding
 import com.simka.jsonplaceholdersampleproject.model.Photo
 import com.simka.jsonplaceholdersampleproject.utils.GlideUtils
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhotoDetailFragment: Fragment() {
 
