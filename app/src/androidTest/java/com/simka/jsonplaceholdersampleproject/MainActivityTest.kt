@@ -16,6 +16,9 @@ import java.lang.Thread.sleep
 
 class MainActivityTest: KoinTest {
 
+    /**
+     * Override default Koin configuration to use Room in-memory database and mock api
+     */
     @Before
     fun init() {
        loadKoinModules(listOf(apiTestModule,roomTestModule))

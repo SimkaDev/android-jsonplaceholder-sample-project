@@ -31,9 +31,12 @@ class PhotoRemoteMediatorTest : KoinTest{
     private val apiService : ApiService by inject()
     private val database: JsonPlaceholderDatabase  by inject()
 
+    /**
+     * Override default Koin configuration to use Room in-memory database
+     */
     @Before
     fun init() {
-        loadKoinModules(listOf( roomTestModule))
+        loadKoinModules(roomTestModule)
     }
 
     @After
